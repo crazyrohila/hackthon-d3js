@@ -70,7 +70,7 @@ app.get('/wcharts/:id', function(req, res) {
     });
     res.render('charts', {
       title: 'Charts ' + req.params.id + ' View',
-      desc: 'These charts are coming from cassandra db.'
+      desc: 'These charts are coming from cassandra db.',
       json_data: json_data,
       charts: charts
     });
