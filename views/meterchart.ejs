@@ -2,7 +2,7 @@
     <head>
     <title>This is <%= title %></title>
     <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script type="text/javascript" src="./gauge.js"></script>
+    <script src="javascripts/gauge.js"></script>
     <script>
       var gauges = [];
       function createGauge(name, label, min, max) {
@@ -25,7 +25,6 @@
         createGauge("memory", "Memory");
         createGauge("cpu", "CPU");
         createGauge("network", "Network");
-        //createGauge("test", "Test", -50, 50 );
       }
 
       function updateGauges() {
@@ -42,16 +41,17 @@
 
       function initialize() {
         createGauges();
-        setInterval(updateGauges, 5000);
+        setInterval(updateGauges, 1500);
       }
     </script>
   </head>
 
   <body onload="initialize()">
+    <h2><%= title %></h2>
+    <h4><%= desc %></h4>
     <span id="memoryGaugeContainer"></span>
     <span id="cpuGaugeContainer"></span>
     <span id="networkGaugeContainer"></span>
-    <span id="testGaugeContainer"></span>
   </body>
 
 </html>

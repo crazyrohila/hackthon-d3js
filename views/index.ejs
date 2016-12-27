@@ -1,1 +1,17 @@
-<h2>This is <%= title %></h2>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>This is <%= title %></title>
+  </head>
+  <body>
+    <h2>This is <%= title %></h2>
+    <h4><%= desc %></h4>
+    <ul>
+      <% charts.forEach(function(chart){ %>
+        <li>
+          <a href="<%= chart.url %>"><%= chart.title %></a>
+        </li>
+      <% }); %>
+    </ul>
+  </body>
+</html>

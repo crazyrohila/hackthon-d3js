@@ -21,19 +21,31 @@ app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
   res.render('index', {
-    title: 'Home Page'
+    title: 'D3js Charts Demo',
+    charts: [{
+      title: 'Cassandra Charts',
+      url: '/wcharts/1'
+    }, {
+      title: 'Gauge Chart',
+      url: '/gaugechart'
+    }, {
+      title: 'Speedometer Chart',
+      url: '/meterchart'
+    }]
   });
 });
 
 app.get('/gaugechart', function(req, res) {
   res.render('gaugechart', {
-    title: 'Gauge Chart'
+    title: 'Gauge Chart',
+    desc: 'This chart picking random values on click. So click on it!'
   });
 });
 
 app.get('/meterchart', function(req, res) {
   res.render('meterchart', {
-    title: 'Speedometer Chart'
+    title: 'Speedometer Chart',
+    desc: 'This chart is updating random values on time interval.'
   });
 });
 
@@ -41,13 +53,26 @@ app.get('/meterchart', function(req, res) {
 // Get the db connection with keyspace
 client = new cassandra.Client({contactPoints: ['localhost'], keyspace: 'd3js1'});
 
+// Details page
 app.get('/wcharts/:id', function(req, res) {
-  var query = 'SELECT data FROM chart_data WHERE cid=?';
-  client.execute(query, [req.params.id], {prepare: true}, function (err, result) {
-    console.log(JSON.parse(result.rows[0].data));
+  var query = 'SELECT cid,data FROM chart_data';
+  client.execute(query, [], {prepare: true}, function (err, result) {
+    var charts = [];
+    var json_data;
+    result.rows.forEach(function(row, i) {
+      charts.push({
+        title: 'Chart ' + row.cid,
+        url: '/wcharts/' + row.cid
+      });
+      if (row.cid == req.params.id) {
+        json_data = row.data;
+      }
+    });
     res.render('charts', {
-      title: 'Charts ' + req.params.id + ' Page',
-      json_data: result.rows[0].data
+      title: 'Charts ' + req.params.id + ' View',
+      desc: 'These charts are coming from cassandra db.'
+      json_data: json_data,
+      charts: charts
     });
   });
 });

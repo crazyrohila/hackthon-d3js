@@ -7,6 +7,17 @@
   </head>
   <body>
     <h2>This is <%= title %></h2>
+    <h4><%= desc %></h4>
+    <ul>
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <% charts.forEach(function(chart){ %>
+        <li>
+          <a href="<%= chart.url %>"><%= chart.title %></a>
+        </li>
+      <% }); %>
+    </ul>
     <script>
       var matrix = <%- json_data %>
       console.log(matrix);
