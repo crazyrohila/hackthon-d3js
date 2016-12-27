@@ -11,7 +11,7 @@ var app = express();
 
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -22,6 +22,7 @@ app.set('view engine', 'ejs');
 app.get('/', function(req, res) {
   res.render('index', {
     title: 'D3js Charts Demo',
+    desc: 'List of d3 charts for demo. Two charts are static and updates value with random data. Cassandra chartsa are coming from database, as we add more charts in db, it will list down them.',
     charts: [{
       title: 'Cassandra Charts',
       url: '/wcharts/1'
